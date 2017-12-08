@@ -8,5 +8,10 @@
 *~
 .\#*
 
-# system dependent junk 
+# system dependent junk
 local/
+
+# blobs
+*.so
+*.dll
+*.dylib
