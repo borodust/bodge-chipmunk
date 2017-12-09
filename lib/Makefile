@@ -1,6 +1,12 @@
+#
+# To make chipmunk in its directory:
+#
+# cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_DEMOS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON .
+# make
+#
 BIN = libchipmunk
 
-CFLAGS = -std=c99 -pedantic -O2 -fPIC
+CFLAGS = -std=c99 -pedantic -O2 -fPIC -Lchipmunk/src/
 
 SRC = main.c
 OBJ = $(SRC:.c=.o)
@@ -12,9 +18,9 @@ ifeq ($(OS),Windows_NT)
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Darwin)
-		BIN := $(BIN).dylib
+		BIN := $(BIN).dylib.bodged
 	else
-		BIN := $(BIN).so
+		BIN := $(BIN).so.bodged
 	endif
 endif
 

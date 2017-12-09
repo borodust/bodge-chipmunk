@@ -3,8 +3,8 @@
 
 (cffi:define-foreign-library (libchipmunk
                               :search-path (asdf:system-relative-pathname :bodge-chipmunk "lib/"))
-  (:darwin (:or "libchipmunk.7.dylib" "libchipmunk.dylib"))
-  (:unix (:or "libchipmunk.so.7" "libchipmunk.so"))
+  (:darwin "libchipmunk.dylib.bodged")
+  (:unix "libchipmunk.so.bodged")
   (:windows "libchipmunk.dll"))
 
 

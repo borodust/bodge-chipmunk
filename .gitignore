@@ -12,6 +12,6 @@
 local/
 
 # blobs
-*.so
-*.dll
-*.dylib
+*.so.*
+*.dll.*
+*.dylib.*
