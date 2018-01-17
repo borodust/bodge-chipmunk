@@ -1,0 +1,17 @@
+language: c
+sudo: false
+
+branches:
+  only:
+    - "/^v\\d+(\\.\\d+)+$/"
+
+matrix:
+  include:
+    - os: linux
+      env: CFLAGS=-m32
+    - os: linux
+      env: CFLAGS=-m64
+    - os: osx
+
+script:
+  - cd lib/ && make clean build

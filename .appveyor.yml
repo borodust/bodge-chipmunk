@@ -1,0 +1,23 @@
+image:
+  - Visual Studio 2017
+
+platform:
+  - x64
+  - x86
+
+skip_non_tags: true
+
+branches:
+  only:
+    - "/^v\\d+(\\.\\d+)+$/"
+
+install:
+  - git submodule update --init --recursive
+
+build_script:
+  - set PATH=C:\msys64\mingw64\bin\;C:\msys64\mingw32\bin\;C:\msys64\usr\bin\;%PATH%
+  - >
+    pacman -S --needed --noconfirm
+    base-devel mingw-w64-i686-toolchain mingw-w64-x86_64-toolchain
+    mingw-w64-i686-cmake mingw-w64-x86_64-cmake
+  - cd lib/ && make clean build
