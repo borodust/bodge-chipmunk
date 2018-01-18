@@ -6,7 +6,8 @@
 #
 BIN = libchipmunk
 
-CFLAGS = -std=c99 -pedantic -O2 -fPIC -I../ -Ichipmunk/include/ -Lchipmunk/src/
+ENV_CFLAGS := $(CFLAGS)
+CFLAGS := $(ENV_CFLAGS) -std=c99 -pedantic -O2 -fPIC -I../ -Ichipmunk/include/ -Lchipmunk/src/
 
 SRC = main.c
 OBJ = $(SRC:.c=.o)
@@ -30,6 +31,7 @@ build: $(BIN)
 $(BIN):
 	cd chipmunk/ && \
 	cmake -G "Unix Makefiles" \
+	      -DCMAKE_C_FLAGS=$(ENV_CFLAGS) \
 	      -DCMAKE_BUILD_TYPE=Release -DBUILD_DEMOS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON . && \
 	make
 	$(CC) -shared $(SRC) $(CFLAGS) -o $(BIN) -Wl,-Bstatic $(STATIC_LIBS) -Wl,-Bdynamic $(LIBS)

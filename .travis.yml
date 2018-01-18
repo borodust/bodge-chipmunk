@@ -1,17 +1,56 @@
 language: c
 sudo: false
 
-branches:
-  only:
-    - "/^v\\d+(\\.\\d+)+$/"
+addons:
+  apt:
+    packages:
+    - gcc-multilib
 
 matrix:
   include:
-    - os: linux
-      env: CFLAGS=-m32
-    - os: linux
-      env: CFLAGS=-m64
-    - os: osx
+  - os: linux
+    env:
+      - ARCH=i686
+      - CFLAGS=-m32
+      - EXTENSION=so
+  - os: linux
+    env:
+      - ARCH=x86_64
+      - CFLAGS=-m64
+      - EXTENSION=so
+  - os: osx
+    env:
+      - ARCH=i686
+      - CFLAGS=-m32
+      - EXTENSION=dylib
+  - os: osx
+    env:
+      - ARCH=x86_64
+      - CFLAGS=-m64
+      - EXTENSION=dylib
+
+env:
+  global:
+    - NAME: libchipmunk
+    - secure: KLbSHSE1/LJFbRvNpjFKr+T72woyA4WwPvJ2eO167YkJv8A/qpjEaPkrEzuidDAWJr5XIbyGY9ZeIinh3xpA6khSHMRH3KGEeuz2zNb++d7VZXJ+BwqKGjFj+t1fCB1fTLCkF4ypNWZlOA6CPGnnBlluYM93+przglHD0rHq6xYrAewSJBq8th5ZGVWqSGhZmG2yh8lZgAXukNUHxsXJjrlkGz46P3DPgKOVrXQ1Oqdl3shq3s+GdrDvENb7uz3qZBULb95lvU0f0MoG0TocXDov7QLsbqiXukWfPyX9q79WaOvSTKOy6UIYxOA2FnG54UGVYtLaswBM6MTqv1a8m6NcsPW4Fy55Wg6Za08EMYXgeccvuA646Yz9+iA53B75Rb+EfsdQ4DDSF08gHoqiJgHdMdel9eNs0qYaMXalDYYCd8/m/1oOCSiv6z9M0j3zY5jYsyzks8vjASOMvk191SCdrroB3ztpbKErjIKVCvGAJKa6Jz6ftpt2HTgCwcoI5lnJgmO7Wrsg+5SOEEGXqtn+cwR1PowakaCHphvOGuRAlsI4sNU+K7ruLV4BE6pXn1gl/TxCj33bIZs9ldxgcKIKGd7hv+hhqxDCsNoA9Uex+GQ6xPgHF8cUEWd1bv/STfioFgskKM4cC238orY6LcJaKx8UogwMgUEv+SS3/fA=
+
+branches:
+  only:
+  - "/^v\\d+(\\.\\d+)+$/"
+
 
 script:
   - cd lib/ && make clean build
+
+before_deploy:
+  - export TARGET_FILE=$TRAVIS_BUILD_DIR/$NAME.$EXTENSION.bodged-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
+  - mv $TRAVIS_BUILD_DIR/lib/$NAME.$EXTENSION.bodged $TARGET_FILE
+
+deploy:
+  provider: releases
+  api-key: $GITHUB_TOKEN
+  file: $TARGET_FILE
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
