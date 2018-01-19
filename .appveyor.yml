@@ -3,7 +3,7 @@ image:
 
 environment:
   global:
-    NAME: libchipmunk
+    NAME: chipmunk
     secure:
   matrix:
   - platform: x64
@@ -27,10 +27,10 @@ install:
   - git submodule update --init --recursive
 
 build_script:
-  - set TARGET_ARTIFACT=%NAME%.dll.bodged-%ARCH%-windows-%APPVEYOR_REPO_TAG_NAME%
+  - set TARGET_ARTIFACT=lib%NAME%.dll.bodged-%ARCH%-windows-%APPVEYOR_REPO_TAG_NAME%
   - pacman -S --needed --noconfirm base-devel %PACKAGES%
   - sh -c "CFLAGS=%CFLAGS% cd lib/ && make clean build"
-  - mv %APPVEYOR_BUILD_FOLDER%\lib\libchipmunk.dll %APPVEYOR_BUILD_FOLDER%\%TARGET_ARTIFACT%
+  - mv %APPVEYOR_BUILD_FOLDER%\lib\lib%NAME%.dll.bodged %APPVEYOR_BUILD_FOLDER%\%TARGET_ARTIFACT%
 
 artifacts:
   - path: $(TARGET_ARTIFACT)
