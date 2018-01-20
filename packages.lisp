@@ -5,4 +5,6 @@
 (cl:defpackage :bodge-chipmunk
   (:nicknames :cp)
   (:use :cl :claw :alexandria)
-  (:export))
+  (:export libchipmunk
+           +vzero+
+           v))
