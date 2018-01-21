@@ -1,4 +1,4 @@
-(in-package :bodge-chipmunk)
+(in-package :chipmunk)
 
 (declaim (inline v))
 (defun v (x y)
