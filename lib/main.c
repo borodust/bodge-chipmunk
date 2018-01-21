@@ -1,10 +1,13 @@
 #include "bodge_chipmunk.h"
 #ifndef __CLAW_API
-  #ifdef __cplusplus
-    #define __CLAW_API extern "C"
+  #if defined(_WIN32)
+    #define __CLAW_API __declspec(dllexport)
   #else
     #define __CLAW_API
   #endif
+#endif
+#if defined(__cplusplus)
+extern "C" {
 #endif
 
 __CLAW_API void __claw_cpArbiterGetContactPointSet(cpContactPointSet* arg1, cpArbiter* arg0) {
@@ -458,3 +461,6 @@ __CLAW_API cpShape* __claw_cpSpaceSegmentQueryFirst(cpSpace* arg0, cpVect* arg1,
 __CLAW_API void __claw_cpSpaceSetGravity(cpSpace* arg0, cpVect* arg1) {
   cpSpaceSetGravity(arg0, (*arg1));
 }
+#if defined(__cplusplus)
+}
+#endif
