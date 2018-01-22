@@ -4,7 +4,6 @@ image:
 environment:
   global:
     NAME: chipmunk
-    secure:
   matrix:
   - platform: x64
     ARCH: x86_64

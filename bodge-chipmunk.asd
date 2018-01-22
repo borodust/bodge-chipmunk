@@ -11,4 +11,5 @@
                (:static-file "bodge_chipmunk.h")
                (:file "claw")
                (:file "chipmunk")
-               (:module spec)))
+               (:module spec)
+               (:module chipmunk-includes :pathname "lib/chipmunk/include/")))

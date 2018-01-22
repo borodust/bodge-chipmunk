@@ -6,6 +6,11 @@ addons:
     packages:
     - gcc-multilib
 
+env:
+  global:
+    - NAME: chipmunk
+    - secure: KLbSHSE1/LJFbRvNpjFKr+T72woyA4WwPvJ2eO167YkJv8A/qpjEaPkrEzuidDAWJr5XIbyGY9ZeIinh3xpA6khSHMRH3KGEeuz2zNb++d7VZXJ+BwqKGjFj+t1fCB1fTLCkF4ypNWZlOA6CPGnnBlluYM93+przglHD0rHq6xYrAewSJBq8th5ZGVWqSGhZmG2yh8lZgAXukNUHxsXJjrlkGz46P3DPgKOVrXQ1Oqdl3shq3s+GdrDvENb7uz3qZBULb95lvU0f0MoG0TocXDov7QLsbqiXukWfPyX9q79WaOvSTKOy6UIYxOA2FnG54UGVYtLaswBM6MTqv1a8m6NcsPW4Fy55Wg6Za08EMYXgeccvuA646Yz9+iA53B75Rb+EfsdQ4DDSF08gHoqiJgHdMdel9eNs0qYaMXalDYYCd8/m/1oOCSiv6z9M0j3zY5jYsyzks8vjASOMvk191SCdrroB3ztpbKErjIKVCvGAJKa6Jz6ftpt2HTgCwcoI5lnJgmO7Wrsg+5SOEEGXqtn+cwR1PowakaCHphvOGuRAlsI4sNU+K7ruLV4BE6pXn1gl/TxCj33bIZs9ldxgcKIKGd7hv+hhqxDCsNoA9Uex+GQ6xPgHF8cUEWd1bv/STfioFgskKM4cC238orY6LcJaKx8UogwMgUEv+SS3/fA=
+
 matrix:
   include:
   - os: linux
@@ -29,11 +34,6 @@ matrix:
       - CFLAGS=-m64
       - EXTENSION=dylib
 
-env:
-  global:
-    - NAME: libchipmunk
-    - secure: KLbSHSE1/LJFbRvNpjFKr+T72woyA4WwPvJ2eO167YkJv8A/qpjEaPkrEzuidDAWJr5XIbyGY9ZeIinh3xpA6khSHMRH3KGEeuz2zNb++d7VZXJ+BwqKGjFj+t1fCB1fTLCkF4ypNWZlOA6CPGnnBlluYM93+przglHD0rHq6xYrAewSJBq8th5ZGVWqSGhZmG2yh8lZgAXukNUHxsXJjrlkGz46P3DPgKOVrXQ1Oqdl3shq3s+GdrDvENb7uz3qZBULb95lvU0f0MoG0TocXDov7QLsbqiXukWfPyX9q79WaOvSTKOy6UIYxOA2FnG54UGVYtLaswBM6MTqv1a8m6NcsPW4Fy55Wg6Za08EMYXgeccvuA646Yz9+iA53B75Rb+EfsdQ4DDSF08gHoqiJgHdMdel9eNs0qYaMXalDYYCd8/m/1oOCSiv6z9M0j3zY5jYsyzks8vjASOMvk191SCdrroB3ztpbKErjIKVCvGAJKa6Jz6ftpt2HTgCwcoI5lnJgmO7Wrsg+5SOEEGXqtn+cwR1PowakaCHphvOGuRAlsI4sNU+K7ruLV4BE6pXn1gl/TxCj33bIZs9ldxgcKIKGd7hv+hhqxDCsNoA9Uex+GQ6xPgHF8cUEWd1bv/STfioFgskKM4cC238orY6LcJaKx8UogwMgUEv+SS3/fA=
-
 branches:
   only:
   - "/^v\\d+(\\.\\d+)+$/"
@@ -43,8 +43,8 @@ script:
   - cd lib/ && make clean build
 
 before_deploy:
-  - export TARGET_FILE=$TRAVIS_BUILD_DIR/$NAME.$EXTENSION.bodged-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
-  - mv $TRAVIS_BUILD_DIR/lib/$NAME.$EXTENSION.bodged $TARGET_FILE
+  - export TARGET_FILE=$TRAVIS_BUILD_DIR/lib$NAME.$EXTENSION.bodged-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
+  - mv $TRAVIS_BUILD_DIR/lib/lib$NAME.$EXTENSION.bodged $TARGET_FILE
 
 deploy:
   provider: releases
