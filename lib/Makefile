@@ -29,7 +29,7 @@ else
 	else
 		BIN := $(BIN).so.bodged
 		CFLAGS := $(CFLAGS) -Wl,-soname,$(BIN)
-		LFLAGS := -Wl,-Bstatic $(STATIC_LIBS) -Wl,-Bdynamic $(LIBS)
+		LFLAGS := -Wl,--whole-archive -Wl,-Bstatic $(STATIC_LIBS) -Wl,--no-whole-archive -Wl,-Bdynamic $(LIBS)
 	endif
 endif
 
