@@ -19,7 +19,7 @@ STATIC_LIBS = -lchipmunk
 ifeq ($(OS),Windows_NT)
 	BIN := $(BIN).dll.bodged
 	CFLAGS := $(CFLAGS) -Wl,-soname,$(BIN)
-	LFLAGS := -Wl,-Bstatic $(STATIC_LIBS) -Wl,-Bdynamic $(LIBS)
+	LFLAGS := -Wl,--whole-archive -Wl,-Bstatic $(STATIC_LIBS) -Wl,--no-whole-archive -Wl,-Bdynamic $(LIBS)
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Darwin)
