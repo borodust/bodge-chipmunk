@@ -139,6 +139,8 @@ below is totally not how idimoatic `CL` is written.*
         (with-many-free ((a (cp:v -20d0 5d0))
                          (b (cp:v 20d0 -5d0)))
           (let ((ground (%cp:segment-shape-new (%cp:space-get-static-body space) a b 0d0)))
+            (%cp:shape-set-friction ground 1d0)
+            (%cp:space-add-shape space ground)
             ;; Now let's make a ball that falls onto the line and rolls off.
             ;; First we need to make a cpBody to hold the physical properties of the object.
             ;; These include the mass, position, velocity, angle, etc. of the object.
