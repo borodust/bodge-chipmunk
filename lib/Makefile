@@ -25,7 +25,7 @@ else
 	ifeq ($(UNAME_S),Darwin)
 		BIN := $(BIN).dylib.bodged
 		CFLAGS := $(CFLAGS) -Wl,-install_name,$(BIN)
-		LFLAGS := $(LIBS) $(STATIC_LIBS)
+		LFLAGS := $(LIBS) -all_load $(STATIC_LIBS)
 	else
 		BIN := $(BIN).so.bodged
 		CFLAGS := $(CFLAGS) -Wl,-soname,$(BIN)
