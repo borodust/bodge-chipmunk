@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/borodust/bodge-chipmunk.svg)](https://travis-ci.org/borodust/bodge-chipmunk) [![Build status](https://ci.appveyor.com/api/projects/status/carmemviy6dq5173?svg=true)](https://ci.appveyor.com/project/borodust/bodge-chipmunk)
 
-# bodge chipmunk wrapper
+nn# bodge chipmunk wrapper
 
 Thin wrapper over [`chipmunk`](http://chipmunk-physics.net/) 2d physics library.
 
@@ -166,7 +166,7 @@ below is totally not how idimoatic `CL` is written.*
                 ;; It is *highly* recommended to use a fixed size time step.
                 (let ((time-step (float 1/60 0d0)))
                   (loop for time = 0 then (incf time time-step) while (< time 2)
-                        do (c-let ((pos %cp:vect)
+                        do (c-with ((pos %cp:vect)
                                    (vel %cp:vect))
                              (%cp:body-get-position pos ball-body)
                              (%cp:body-get-velocity vel ball-body)
