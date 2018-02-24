@@ -1,4 +1,4 @@
-(in-package :chipmunk)
+(cl:in-package :chipmunk)
 
 (declaim (inline v))
 (defun v (x y)
