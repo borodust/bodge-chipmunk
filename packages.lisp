@@ -1,7 +1,3 @@
-(cl:defpackage :%chipmunk
-  (:nicknames :%cp)
-  (:use))
-
 (cl:defpackage :chipmunk
   (:nicknames :cp)
   (:use :cl :claw :alexandria)

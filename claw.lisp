@@ -1,5 +1,5 @@
 (claw:c-include "bodge_chipmunk.h" bodge-chipmunk
-  :in-package :%cp
+  :in-package (:%chipmunk :%cp)
   :sysincludes (:chipmunk-includes)
   :exclude-sources ("chipmunk_private\\.h$")
   :include-definitions ("(cp|CP_)\\w*")
