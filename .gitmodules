@@ -1,3 +1,6 @@
 [submodule "lib/chipmunk"]
 	path = lib/chipmunk
 	url = https://github.com/slembcke/Chipmunk2D.git
+[submodule "src/lib/chipmunk"]
+	path = src/lib/chipmunk
+	url = https://github.com/slembcke/Chipmunk2D.git

@@ -10,7 +10,7 @@ ENV_CFLAGS := $(CFLAGS)
 CFLAGS := $(ENV_CFLAGS) -std=c99 -pedantic -O2 -fPIC -I../ -Ichipmunk/include/ -Lchipmunk/src/
 
 
-SRC = main.c
+SRC = adapter.c
 OBJ = $(SRC:.c=.o)
 LIBS = -lm
 STATIC_LIBS = -lchipmunk
