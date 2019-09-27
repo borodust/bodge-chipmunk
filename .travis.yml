@@ -9,7 +9,7 @@ addons:
 env:
   global:
     - NAME: chipmunk
-    - secure: KLbSHSE1/LJFbRvNpjFKr+T72woyA4WwPvJ2eO167YkJv8A/qpjEaPkrEzuidDAWJr5XIbyGY9ZeIinh3xpA6khSHMRH3KGEeuz2zNb++d7VZXJ+BwqKGjFj+t1fCB1fTLCkF4ypNWZlOA6CPGnnBlluYM93+przglHD0rHq6xYrAewSJBq8th5ZGVWqSGhZmG2yh8lZgAXukNUHxsXJjrlkGz46P3DPgKOVrXQ1Oqdl3shq3s+GdrDvENb7uz3qZBULb95lvU0f0MoG0TocXDov7QLsbqiXukWfPyX9q79WaOvSTKOy6UIYxOA2FnG54UGVYtLaswBM6MTqv1a8m6NcsPW4Fy55Wg6Za08EMYXgeccvuA646Yz9+iA53B75Rb+EfsdQ4DDSF08gHoqiJgHdMdel9eNs0qYaMXalDYYCd8/m/1oOCSiv6z9M0j3zY5jYsyzks8vjASOMvk191SCdrroB3ztpbKErjIKVCvGAJKa6Jz6ftpt2HTgCwcoI5lnJgmO7Wrsg+5SOEEGXqtn+cwR1PowakaCHphvOGuRAlsI4sNU+K7ruLV4BE6pXn1gl/TxCj33bIZs9ldxgcKIKGd7hv+hhqxDCsNoA9Uex+GQ6xPgHF8cUEWd1bv/STfioFgskKM4cC238orY6LcJaKx8UogwMgUEv+SS3/fA=
+    - secure: O1r5AGIL1ryM6mAsNdAKxXdGAhqMQrzniyd1tys/EnBAEGQAnJFnBpH6eEeUKwwjsn7E9MzyeogIEBasJ3szsImlUsuvBfrVET2khtKEycy9me9oxPdvc+4uJxZBqTZ+u8vtlD79+EJ0RZthO/SEOz/TrE4yijvOVGtUGKia583OEMaSq1JvTipBbUTlgwixe5QT4gsxdUIc3k7pQ2+tENMr4oBofKCVPDXSdbZDoe1HdjEv24Xp5rd4yonqPhh54yEe7fM/cwNN5otGkag9hp+ta335k8uz1iVlz+9YQIWZ9l9tbo6XGRMkJ9qBURtlri7JMFbcOFuLzwh6WxEYOxs0BItDvoQpgodShgAKgpPp1b68dXRZPnticQ1dlRY+oOJHMT+VdxJ6vPnjtLGerJF4idG+tuGUg3KVMG7gAvTRKXrjjKzB31rjGC8ira3ZeALajT4N4lnbfAlJWE8XosWQNQLXGrLxfNLnsgAo+SejLQxpax39yUX7iQ07zqJh175cstkqDdfsfJBF53rIclA6x06a21+dCkP3fLfB3HkxNdP9DO1ppUmvDb2FyivNNHMX8g2ZjZeuv3v9DlSrIubtVJT/uV0eyURdKDbPNVABZ0/R7YMQfgsP/vAeznCN2qlnk6Ag/lmFEsTmGYTIYWZHuYCHrTOb2GcDD7GpQPI=
 
 matrix:
   include:
@@ -40,11 +40,11 @@ branches:
 
 
 script:
-  - cd lib/ && make clean build
+  - cd src/lib/ && make clean build
 
 before_deploy:
   - export TARGET_FILE=$TRAVIS_BUILD_DIR/lib$NAME.$EXTENSION.bodged-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
-  - mv $TRAVIS_BUILD_DIR/lib/lib$NAME.$EXTENSION.bodged $TARGET_FILE
+  - mv $TRAVIS_BUILD_DIR/src/lib/lib$NAME.$EXTENSION.bodged $TARGET_FILE
 
 deploy:
   provider: releases
