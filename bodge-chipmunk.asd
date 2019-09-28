@@ -22,7 +22,7 @@
   :author "Pavel Korolev"
   :mailto "dev@borodust.org"
   :license "MIT"
-  :depends-on (:bodge-chipmunk)
+  :depends-on (:float-features :chipmunk-blob :bodge-chipmunk)
   :pathname "example/"
   :serial t
   :components ((:file "example")))
