@@ -1,1 +1,2 @@
-spec/*.spec linguist-vendored
+**/*.spec linguist-vendored
+**/adapter.c linguist-vendored
