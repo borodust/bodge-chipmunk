@@ -4,17 +4,19 @@ image:
 environment:
   global:
     NAME: chipmunk
+    ASDF_SYSTEM: bodge-chipmunk
+    PATH: ~/.bodge/bin/:$PATH
   matrix:
   - platform: x64
     ARCH: x86_64
     CFLAGS: -m64
     PATH: C:\msys64\mingw64\bin\;C:\msys64\usr\bin\;$(PATH)
-    PACKAGES: mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+    PACKAGES: mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake zip
   - platform: x86
     ARCH: i686
     CFLAGS: -m32
     PATH: C:\msys64\mingw32\bin\;C:\msys64\usr\bin\;$(PATH)
-    PACKAGES: mingw-w64-i686-toolchain mingw-w64-i686-cmake
+    PACKAGES: mingw-w64-i686-toolchain mingw-w64-i686-cmake zip
 
 skip_non_tags: true
 
@@ -25,16 +27,23 @@ branches:
 
 install:
   - git submodule update --init --recursive
+  - curl -L http://bodge.borodust.org/files/install.sh | sh
 
 build_script:
   - set TARGET_ARTIFACT=lib%NAME%.dll.bodged-%ARCH%-windows-%APPVEYOR_REPO_TAG_NAME%
+  - set TARGET_SPEC=%TARGET_ARTIFACT%-spec.zip
   - pacman -S --needed --noconfirm base-devel %PACKAGES%
-  - sh -c "CFLAGS=%CFLAGS% cd src/lib/ && make clean build"
+  - >
+    sh -c "CFLAGS=%CFLAGS% cd src/lib/
+    && make clean build
+    && ~/.bodge/bin/lisp regen-local-spec-and-zip --arch %ARCH% \"$(cygpath -u '%APPVEYOR_BUILD_FOLDER%')\" %ASDF_SYSTEM% \"$(cygpath -u '%APPVEYOR_BUILD_FOLDER%\%TARGET_SPEC%')\""
   - mv %APPVEYOR_BUILD_FOLDER%\src\lib\lib%NAME%.dll.bodged %APPVEYOR_BUILD_FOLDER%\%TARGET_ARTIFACT%
 
 artifacts:
   - path: $(TARGET_ARTIFACT)
     name: target_artifact
+  - path: $(TARGET_SPEC)
+    name: target_spec
 
 deploy:
   provider: GitHub

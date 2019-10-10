@@ -5,10 +5,13 @@ addons:
   apt:
     packages:
     - gcc-multilib
+    - zip
 
 env:
   global:
     - NAME: chipmunk
+    - ASDF_SYSTEM: bodge-chipmunk
+    - PATH: ~/.bodge/bin/:$PATH
     - secure: O1r5AGIL1ryM6mAsNdAKxXdGAhqMQrzniyd1tys/EnBAEGQAnJFnBpH6eEeUKwwjsn7E9MzyeogIEBasJ3szsImlUsuvBfrVET2khtKEycy9me9oxPdvc+4uJxZBqTZ+u8vtlD79+EJ0RZthO/SEOz/TrE4yijvOVGtUGKia583OEMaSq1JvTipBbUTlgwixe5QT4gsxdUIc3k7pQ2+tENMr4oBofKCVPDXSdbZDoe1HdjEv24Xp5rd4yonqPhh54yEe7fM/cwNN5otGkag9hp+ta335k8uz1iVlz+9YQIWZ9l9tbo6XGRMkJ9qBURtlri7JMFbcOFuLzwh6WxEYOxs0BItDvoQpgodShgAKgpPp1b68dXRZPnticQ1dlRY+oOJHMT+VdxJ6vPnjtLGerJF4idG+tuGUg3KVMG7gAvTRKXrjjKzB31rjGC8ira3ZeALajT4N4lnbfAlJWE8XosWQNQLXGrLxfNLnsgAo+SejLQxpax39yUX7iQ07zqJh175cstkqDdfsfJBF53rIclA6x06a21+dCkP3fLfB3HkxNdP9DO1ppUmvDb2FyivNNHMX8g2ZjZeuv3v9DlSrIubtVJT/uV0eyURdKDbPNVABZ0/R7YMQfgsP/vAeznCN2qlnk6Ag/lmFEsTmGYTIYWZHuYCHrTOb2GcDD7GpQPI=
 
 matrix:
@@ -18,21 +21,25 @@ matrix:
       - ARCH=i686
       - CFLAGS=-m32
       - EXTENSION=so
+      - LIBNAME=lib$NAME.$EXTENSION.bodged
   - os: linux
     env:
       - ARCH=x86_64
       - CFLAGS=-m64
       - EXTENSION=so
+      - LIBNAME=lib$NAME.$EXTENSION.bodged
   - os: osx
     env:
       - ARCH=i686
       - CFLAGS=-m32
       - EXTENSION=dylib
+      - LIBNAME=lib$NAME.$EXTENSION.bodged
   - os: osx
     env:
       - ARCH=x86_64
       - CFLAGS=-m64
       - EXTENSION=dylib
+      - LIBNAME=lib$NAME.$EXTENSION.bodged
 
 branches:
   only:
@@ -43,7 +50,10 @@ script:
   - cd src/lib/ && make clean build
 
 before_deploy:
-  - export TARGET_FILE=$TRAVIS_BUILD_DIR/lib$NAME.$EXTENSION.bodged-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
+  - export TARGET_FILE=$TRAVIS_BUILD_DIR/$LIBNAME-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
+  - export TARGET_SPEC=$TARGET_FILE-spec.zip
+  - curl -L http://bodge.borodust.org/files/install.sh | sh
+  - lisp regen-local-spec-and-zip --arch $ARCH "$TRAVIS_BUILD_DIR" $ASDF_SYSTEM "$TARGET_SPEC"
   - mv $TRAVIS_BUILD_DIR/src/lib/lib$NAME.$EXTENSION.bodged $TARGET_FILE
 
 deploy:
