@@ -59,7 +59,7 @@ before_deploy:
 deploy:
   provider: releases
   api-key: $GITHUB_TOKEN
-  file: $TARGET_FILE
+  file: [$TARGET_FILE, $TARGET_SPEC]
   skip_cleanup: true
   overwrite: true
   on:
