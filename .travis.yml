@@ -45,15 +45,16 @@ branches:
   only:
   - "/^v\\d+(\\.\\d+)+$/"
 
+install:
+  - curl -L http://bodge.borodust.org/files/install.sh | sh
 
 script:
-  - cd src/lib/ && make clean build
-
-before_deploy:
   - export TARGET_FILE=$TRAVIS_BUILD_DIR/$LIBNAME-$ARCH-$TRAVIS_OS_NAME-$TRAVIS_BRANCH
   - export TARGET_SPEC=$TARGET_FILE-spec.zip
-  - curl -L http://bodge.borodust.org/files/install.sh | sh
+  - cd src/lib/ && make clean build
   - lisp regen-local-spec-and-zip --arch $ARCH "$TRAVIS_BUILD_DIR" $ASDF_SYSTEM "$TARGET_SPEC"
+
+before_deploy:
   - mv $TRAVIS_BUILD_DIR/src/lib/lib$NAME.$EXTENSION.bodged $TARGET_FILE
 
 deploy:
