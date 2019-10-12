@@ -6,7 +6,7 @@
 #
 BIN = libchipmunk
 
-ENV_CFLAGS := $(CFLAGS)
+ENV_CFLAGS := $(CFLAGS) -DCP_USE_DOUBLES=0 -DCP_USE_CGTYPES=0
 CFLAGS := $(ENV_CFLAGS) -std=c99 -pedantic -O2 -fPIC -I../ -Ichipmunk/include/ -Lchipmunk/src/
 
 
