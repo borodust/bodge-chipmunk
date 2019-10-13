@@ -39,7 +39,7 @@ build: $(BIN)
 $(BIN):
 	cd chipmunk/ && \
 	cmake -G "Unix Makefiles" \
-	      -DCMAKE_C_FLAGS=$(ENV_CFLAGS) \
+	      -DCMAKE_C_FLAGS="$(ENV_CFLAGS)" \
 	      -DCMAKE_BUILD_TYPE=Release -DBUILD_DEMOS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 	      -DBUILD_SHARED=OFF . && \
 	make
