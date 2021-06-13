@@ -1,15 +1,18 @@
-(uiop:define-package :%chipmunk
-  (:nicknames :%cp)
-  (:use))
-
-
-(claw:defwrapper (chipmunk::bodge-chipmunk
-                  (:includes :chipmunk-includes)
+(claw:defwrapper (:bodge-chipmunk
+                  (:system :bodge-chipmunk/wrapper)
+                  (:headers "bodge_chipmunk.h")
+                  (:includes "src/" :chipmunk-includes)
                   (:include-definitions "^(cp|CP_)\\w*")
-                  (:exclude-sources "chipmunk_private\\.h$"))
+                  (:exclude-sources "chipmunk_private\\.h$")
+                  (:targets ((:and :x86-64 :linux) "x86_64-pc-linux-gnu")
+                            ((:and :x86-64 :windows) "x86_64-w64-mingw32")
+                            ((:and :x86-64 :drawin) "x86_64-apple-darwin-gnu"))
+                  (:persistent t
+                   :depends-on (:claw-utils)))
   :in-package :%chipmunk
   :trim-enum-prefix t
-  :with-adapter (:static '(:chipmunk-lib "../adapter.c"))
+  :with-adapter (:static
+                 :path "src/lib/adapter.c")
   :recognize-bitfields t
   :recognize-strings t
   :override-types ((:string claw-utils:claw-string)

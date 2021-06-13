@@ -4,16 +4,23 @@
   :author "Pavel Korolev"
   :mailto "dev@borodust.org"
   :license "MIT"
-  :depends-on (:alexandria :cffi :claw :claw-utils :cffi-c-ref)
+  :depends-on (:alexandria :cffi :cffi-c-ref :bodge-chipmunk-bindings)
   :pathname "src/"
   :serial t
   :components ((:file "packages")
-               (:static-file "bodge_chipmunk.h")
-               (:file "claw")
-               (:file "chipmunk")
-               (:module spec)
-               (:module chipmunk-lib :pathname "lib/chipmunk/")
-               (:module chipmunk-includes :pathname "lib/chipmunk/include/")))
+               (:file "chipmunk")))
+
+
+(asdf:defsystem :bodge-chipmunk/wrapper
+  :description "Wrapper over chipmunk 2d physics library"
+  :version "1.0.0"
+  :author "Pavel Korolev"
+  :mailto "dev@borodust.org"
+  :license "MIT"
+  :depends-on (:alexandria :cffi :claw :claw-utils :cffi-c-ref)
+  :serial t
+  :components ((:file "src/claw")
+               (:module :chipmunk-includes :pathname "src/lib/chipmunk/include/")))
 
 
 (asdf:defsystem :bodge-chipmunk/example
